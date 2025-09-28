@@ -49,6 +49,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for Postgres..."
+            sleep 2
+          done
+
       - name: Run unit tests
         run: ./gradlew test
         env:

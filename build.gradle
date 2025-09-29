@@ -22,6 +22,7 @@ sonar {
     properties {
         property "sonar.projectKey", "kingposhwolf_customer-registration-agents-api"
         property "sonar.organization", "kingposhwolf"
+        property "sonar.java.binaries", "none"
     }
 }
 

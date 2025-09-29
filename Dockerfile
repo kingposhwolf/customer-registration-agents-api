@@ -14,7 +14,7 @@ COPY src src
 RUN chmod +x gradlew && ./gradlew build -x test
 
 # Create final image
-FROM openjdk:17-jre-slim
+FROM openjdk:21-jre-slim
 
 WORKDIR /app
 

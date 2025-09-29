@@ -8,11 +8,14 @@ WORKDIR /app
 COPY build.gradle settings.gradle gradlew ./
 COPY gradle gradle
 
+# Copy config files for checkstyle and spotbugs
+COPY config config
+
 # Copy source code
 COPY src src
 
-# Build the application
-RUN chmod +x gradlew && ./gradlew build -x test
+# Build the application (skip tests and code quality checks as they run in CI)
+RUN chmod +x gradlew && ./gradlew bootJar -x test -x checkstyleMain -x checkstyleTest -x spotbugsMain -x spotbugsTest
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine

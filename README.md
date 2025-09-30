@@ -13,7 +13,7 @@ A production-ready RESTful service for managing customer registrations performed
 - Gradle build with wrapper for reproducible builds
 - Dockerfile for containerized deployment
 - GitHub Actions workflow for CI/CD
-- Optional static analysis via Sonar configuration
+- Optional static analysis via bugspot
 
 ## Tech Stack
 
@@ -128,8 +128,8 @@ Authorization: Bearer <JWT_TOKEN>
 - Blacklisted tokens are rejected (e.g., after logout), leveraging an in-memory cache to track revoked tokens.
 
 Note: Replace any example endpoints below with your actual routes configured in the application:
-- POST /api/auth/login → returns access token
-- POST /api/auth/logout → blacklists token
+- POST /api/v1/auth/login → returns access token
+- POST /api/v1/auth/logout → blacklists token
 - Protected endpoints require Authorization: Bearer <JWT_TOKEN>
 
 ## CI/CD and Quality
@@ -144,9 +144,14 @@ Note: Replace any example endpoints below with your actual routes configured in 
 - Favor DTOs for request/response payloads; keep entities isolated in the persistence layer.
 - Centralize exception handling and avoid leaking internal details in API responses.
 
-## API Documentation
 
-If you use an API documentation tool (e.g., OpenAPI/Swagger), expose it via your chosen endpoint (for example, `/swagger-ui` or `/v3/api-docs`). Otherwise, consider adding one for discoverability.
+### Postman Collection
+For convenience, a Postman collection is included to help you explore and test the available API endpoints quickly.
+
+- [Download Postman Collection](./postman/CustomerRegistrationAPI.postman_collection.json)  
+  *(import this file into Postman to get started)*
+
+
 
 ## Contributing
 
@@ -161,9 +166,7 @@ Specify your license here (e.g., MIT, Apache-2.0). Include the full text in a LI
 
 ## Contact
 
-- Maintainer: <Your Name or Team>
-- Email: <contact@example.com>
+- Maintainer: Julius Mushi
+- Email: juliusstephen1@gmail.com
 
 ---
-
-Thank you for using Customer Registration Agents API! If you need help integrating or extending the service, please open an issue or discussion. My name is AI Assistant, and I’m happy to help.

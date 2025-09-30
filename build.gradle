@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'checkstyle'
-    id "org.sonarqube" version "6.3.1.5724"
     id 'com.github.spotbugs' version '6.0.24'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
@@ -15,17 +14,6 @@ description = 'customer-registration-agents-api'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-sonar {
-    properties {
-        property "sonar.projectKey", "kingposhwolf_customer-registration-agents-api"
-        property "sonar.organization", "kingposhwolf"
-        property "sonar.sources", "src/main/java"
-        property "sonar.tests", "src/test/java"
-        property "sonar.java.binaries", "build/classes/java/main"
-        property "sonar.exclusions", "**/build/**,**/*.gradle"
     }
 }
 

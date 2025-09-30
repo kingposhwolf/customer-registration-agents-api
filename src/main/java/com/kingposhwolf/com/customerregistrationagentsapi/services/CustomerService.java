@@ -7,10 +7,14 @@ import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.customer.C
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.auth.UserDetailsDto.Location;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.auth.UserDetailsDto.LocationValue;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.paginated.PaginatedResponse;
+import com.kingposhwolf.com.customerregistrationagentsapi.exceptions.GlobalException;
 import com.kingposhwolf.com.customerregistrationagentsapi.models.Customer;
 import com.kingposhwolf.com.customerregistrationagentsapi.models.User;
 import com.kingposhwolf.com.customerregistrationagentsapi.repositories.customer.CustomerRepositoryCustom;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -38,7 +42,6 @@ public class CustomerService extends BaseService<Customer, Long, CreateCustomerD
 
     @Override
     protected Customer mapCreateDTOToEntity(CreateCustomerDto createCustomerDto) {
-        log.warn("reach here =======>");
         Customer customer = new Customer();
         customer.setName(createCustomerDto.getName());
         customer.setNida(createCustomerDto.getNida());
@@ -47,6 +50,9 @@ public class CustomerService extends BaseService<Customer, Long, CreateCustomerD
         if (createCustomerDto.getWardId() != null) {
             customer.setWard(wardService.findOne(createCustomerDto.getWardId()));
         }
+
+        User currentUser = getCurrentUser();
+        customer.setRegisteredBy(currentUser);
 
         return customer;
     }
@@ -116,5 +122,15 @@ public class CustomerService extends BaseService<Customer, Long, CreateCustomerD
                 .dob(entity.getDob())
                 .location(location)
                 .build();
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new GlobalException(HttpStatus.UNAUTHORIZED, "User not authenticated");
+        }
+
+        return (User) authentication.getPrincipal();
     }
 }

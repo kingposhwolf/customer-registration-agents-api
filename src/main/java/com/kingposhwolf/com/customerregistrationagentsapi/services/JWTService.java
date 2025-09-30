@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -81,7 +82,7 @@ public class JWTService {
 
     public boolean validateToken(String token, User user){
         String username = getUsernameFromToken(token);
-        return (username.equals(user.getPhoneNumber()) && !isTokenExpired(token));
+        return (username.equals(user.getUsername()) && !isTokenExpired(token) && !isTokenBlacklisted(token));
     }
 
     public void blacklistToken(String token) {

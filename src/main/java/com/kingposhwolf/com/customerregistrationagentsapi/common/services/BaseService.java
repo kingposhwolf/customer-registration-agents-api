@@ -83,7 +83,6 @@ public abstract class BaseService<T, ID, CreateDTO, UpdateDTO, ListDTO, DetailDT
 
     public DetailDTO findOneAsDetailDTO(ID id) {
         T entity = findOne(id);
-        log.warn("reach here========>");
         return mapEntityToDetailDTO(entity);
     }
 

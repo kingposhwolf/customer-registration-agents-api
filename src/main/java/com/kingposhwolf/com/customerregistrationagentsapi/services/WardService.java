@@ -4,12 +4,12 @@ import com.kingposhwolf.com.customerregistrationagentsapi.common.services.BaseSe
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.input.location.ward.CreateWardDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.location.ward.WardListDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.models.Ward;
-import com.kingposhwolf.com.customerregistrationagentsapi.repositories.ward.WardRepositoryImpl;
+import com.kingposhwolf.com.customerregistrationagentsapi.repositories.ward.WardRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WardService extends BaseService<Ward, Long, CreateWardDto, CreateWardDto, WardListDto, WardListDto>{
-    public WardService(WardRepositoryImpl repository) {
+    public WardService(WardRepositoryCustom repository) {
         super(repository, "Ward");
     }
 

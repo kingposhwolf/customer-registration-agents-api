@@ -5,13 +5,16 @@ import com.kingposhwolf.com.customerregistrationagentsapi.dtos.input.location.re
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.location.regions.RegainDetailDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.location.regions.RegionListDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.models.Region;
-import com.kingposhwolf.com.customerregistrationagentsapi.repositories.region.RegionRepositoryImpl;
+import com.kingposhwolf.com.customerregistrationagentsapi.repositories.region.RegionRepositoryCustom;
+import com.kingposhwolf.com.customerregistrationagentsapi.util.APIResponder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RegionService extends BaseService<Region, Long, CreateRegionDto, CreateRegionDto, RegionListDto, RegainDetailDto> {
 
-    public RegionService(RegionRepositoryImpl repository) {
+    public RegionService(RegionRepositoryCustom repository) {
         super(repository, "Region");
     }
 

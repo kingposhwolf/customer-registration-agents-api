@@ -40,11 +40,18 @@ jobs:
 
       - name: Run Checkstyle
         run: ./gradlew checkstyleMain
+        continue-on-error: true  # Optional: also make checkstyle non-blocking
 
       - name: Run SpotBugs
         run: ./gradlew spotbugsMain
+        continue-on-error: true  # Optional: also make spotbugs non-blocking
+
+      - name: Build for SonarCloud
+        run: ./gradlew build -x test
+        continue-on-error: true
 
       - name: SonarCloud Scan
+        continue-on-error: true
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

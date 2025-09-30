@@ -4,13 +4,13 @@ import com.kingposhwolf.com.customerregistrationagentsapi.common.services.BaseSe
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.input.location.district.CreateDistrictDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.location.district.DistrictListDto;
 import com.kingposhwolf.com.customerregistrationagentsapi.models.District;
-import com.kingposhwolf.com.customerregistrationagentsapi.repositories.district.DistrictRepositoryImpl;
+import com.kingposhwolf.com.customerregistrationagentsapi.repositories.district.DistrictRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DistrictService extends BaseService<District, Long, CreateDistrictDto, CreateDistrictDto, DistrictListDto, DistrictListDto> {
 
-    public DistrictService(DistrictRepositoryImpl repository) {
+    public DistrictService(DistrictRepositoryCustom repository) {
         super(repository, "District");
     }
 

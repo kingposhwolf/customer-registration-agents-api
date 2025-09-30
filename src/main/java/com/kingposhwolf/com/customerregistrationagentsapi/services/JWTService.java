@@ -26,6 +26,12 @@ public class JWTService {
     @Value("${JWT_EXPIRATION_TIME}")
     private long expirationTime;
 
+    private final CaffeineCacheService cacheService;
+
+    public JWTService(CaffeineCacheService cacheService) {
+        this.cacheService = cacheService;
+    }
+
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .claims(claims)
@@ -76,5 +82,22 @@ public class JWTService {
     public boolean validateToken(String token, User user){
         String username = getUsernameFromToken(token);
         return (username.equals(user.getPhoneNumber()) && !isTokenExpired(token));
+    }
+
+    public void blacklistToken(String token) {
+        try {
+            cacheService.saveData( "blacklisted", token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isTokenBlacklisted(String token) {
+        try {
+            String cachedValue = cacheService.getDataByKey("blacklisted");
+            return token.equals(cachedValue);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

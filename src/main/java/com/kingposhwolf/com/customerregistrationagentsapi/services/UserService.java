@@ -20,7 +20,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phoneNumber){
+        log.info("Loading user by phone number: {}", phoneNumber);
         Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        log.info("User found: {}", user.isPresent());
         if(user.isEmpty()) throw new GlobalException(HttpStatus.UNAUTHORIZED, "Invalid phone number or password");
         return user.get();
     }

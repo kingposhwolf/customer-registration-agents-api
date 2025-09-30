@@ -4,6 +4,7 @@ import com.kingposhwolf.com.customerregistrationagentsapi.models.User;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.input.auth.LoginForm;
 import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.auth.LoginResponse;
 import com.kingposhwolf.com.customerregistrationagentsapi.util.APIResponder;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,5 +28,22 @@ public class AuthenticationService {
                 .role(user.getRole())
                 .build();
         return APIResponder.of(HttpStatus.OK, "Login Successful", response);
+    }
+
+    public APIResponder<String> logout(HttpServletRequest request) {
+        String token = extractTokenFromRequest(request);
+        if (token != null) {
+            jwtService.blacklistToken(token);
+            return APIResponder.of(HttpStatus.OK, "Logout Successfully");
+        }
+        return APIResponder.of(HttpStatus.BAD_REQUEST, "No Token Found");
+    }
+
+    private String extractTokenFromRequest(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        return null;
     }
 }

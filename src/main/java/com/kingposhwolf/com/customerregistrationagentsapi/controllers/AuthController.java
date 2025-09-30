@@ -6,6 +6,7 @@ import com.kingposhwolf.com.customerregistrationagentsapi.dtos.output.auth.UserD
 import com.kingposhwolf.com.customerregistrationagentsapi.models.User;
 import com.kingposhwolf.com.customerregistrationagentsapi.services.AuthenticationService;
 import com.kingposhwolf.com.customerregistrationagentsapi.util.APIResponder;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,11 @@ public class AuthController {
             return APIResponder.of(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
         return APIResponder.of(HttpStatus.OK, "Details fetched successful", user.toUserDetails());
+    }
+
+    @PostMapping("/logout")
+    public APIResponder<String> logout(HttpServletRequest request) {
+        return authenticationService.logout(request);
     }
 
 }
